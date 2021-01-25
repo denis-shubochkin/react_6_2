@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+
 import './App.css';
+import NotesWidget from './NotesWidget/NotesWidget';
+import NotesForm from './NotesForm/NotesForm';
+import { useEffect, useState } from 'react';
 
 function App() {
+
+  const [arr, setArr] = useState([]);
+
+  const getNotes = () => {
+  //  fetch(process.env.REACT_APP_NOTES_URL)  - не работает с переменно env, переменная в файле dev.env
+    fetch('http://localhost:7777/notes')
+    .then(response => response.json())
+    .then(data => {
+       setArr(data);
+    })
+  }
+
+  useEffect( () => {
+    getNotes();
+  })
+
+
+  const onRefreshHandler = () => {
+    getNotes();
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <NotesWidget notes={arr} onRefresh={onRefreshHandler}/>
+     <NotesForm Refresh={onRefreshHandler}/>
     </div>
   );
 }
