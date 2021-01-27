@@ -4,7 +4,7 @@ export default function Note(props) {
   const { elem, onRefresh } = props;
 
   const onDelHandler = (e) => {
-    fetch(`http://localhost:7777/notes/${e.target.id}`, {
+    fetch(`${process.env.REACT_APP_NOTES_URL}/${e.target.id}`, {
       method: "DELETE",
     }).then((response) => {
       response.status === 204 ? onRefresh() : console.log("err");

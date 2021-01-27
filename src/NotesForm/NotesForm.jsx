@@ -16,7 +16,7 @@ export default function NotesForm(props) {
 
   const onSendNote = () => {
     if (input !== "") {
-      fetch("http://localhost:7777/notes", {
+      fetch(process.env.REACT_APP_NOTES_URL, {
         method: "POST", // или 'PUT'
         body: JSON.stringify(input),
       }).then(() => {
